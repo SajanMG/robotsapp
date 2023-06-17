@@ -3,6 +3,7 @@ import CardList from "../Components/CardList";
 import SearchBox from "../Components/SearchBox";
 import "./App.css";
 import Scroll from "../Components/Scroll";
+import ErrorBoundry from "../Components/ErrorBoundry";
 
 class App extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class App extends Component {
     const filteredRobots = robots.filter((robot) => {
       return robot.name.toLowerCase().includes(searchfield.toLowerCase());
     });
-    //using ternary operation her instead of normal
+    //using ternary operation here instead of normal
     return !robots.length ? (
       <h1>Loading</h1>
     ) : (
@@ -35,7 +36,9 @@ class App extends Component {
         <h1 className="f1"> RoboFriends</h1>
         <SearchBox searchChange={this.onSearchChange} />
         <Scroll>
-          <CardList robots={filteredRobots} />;
+          <ErrorBoundry>
+            <CardList robots={filteredRobots} />;
+          </ErrorBoundry>
         </Scroll>
       </div>
     );
